@@ -1,0 +1,51 @@
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+}
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 24px;
+
+    mat-form-field {
+        width: 180px;
+    }
+}
+
+.filtros-acoes {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tabela { width: 100%; }
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.solicitado { background-color: #e3f2fd; color: #1565c0; }
+    &.liberado { background-color: #e8f5e9; color: #2e7d32; }
+    &.aprovado { background-color: #f3e5f5; color: #6a1b9a; }
+    &.rejeitado { background-color: #ffebee; color: #c62828; }
+    &.cancelado { background-color: #f5f5f5; color: #616161; }
+}

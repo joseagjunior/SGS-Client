@@ -1,0 +1,117 @@
+<div class="container">
+    <div class="header">
+        <h1>Solicitações</h1>
+        <a mat-raised-button color="primary" routerLink="/solicitacoes/nova">
+            <mat-icon>add</mat-icon> Nova Solicitação
+        </a>
+    </div>
+
+    <form [formGroup]="filtroForm" class="filtros" (ngSubmit)="listar()">
+        <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option [value]="null">Todas</mat-option>
+                @for (status of statusList; track $index) {
+                    <mat-option [value]="status">{{ status }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="categoriaId">
+                <mat-option [value]="null">Todas</mat-option>
+                @for (categoria of categorias; track categoria.id) {
+                    <mat-option [value]="categoria.id">{{ categoria.nome }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Data Início</mat-label>
+            <input matInput [matDatepicker]="pickerInicio" formControlName="dataInicio">
+            <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+            <mat-datepicker #pickerInicio></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Data Fim</mat-label>
+            <input matInput [matDatepicker]="pickerFim" formControlName="dataFim">
+            <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFim></mat-datepicker>
+        </mat-form-field>
+
+        <div class="filtros-acoes">
+            <button mat-raised-button color="primary" type="submit">
+                <mat-icon>search</mat-icon> Filtrar
+            </button>
+            <button mat-stroked-button type="button" (click)="limparFiltros()">
+                <mat-icon>clear</mat-icon> Limpar
+            </button>
+        </div>
+    </form>
+
+    <table mat-table [dataSource]="solicitacoes" class="tabela">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let solicitacao">{{ solicitacao.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="solicitanteNome">
+            <th mat-header-cell *matHeaderCellDef>Solicitante</th>
+            <td mat-cell *matCellDef="let solicitacao">
+                {{ solicitacao.solicitanteNome }}
+                <div style="font-size: 12px;">{{ solicitacao.cpfCnpj }}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="categoriaNome">
+            <th mat-header-cell *matHeaderCellDef>Categoria</th>
+            <td mat-cell *matCellDef="let solicitacao">{{ solicitacao.categoriaNome }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="valor">
+            <th mat-header-cell *matHeaderCellDef>Valor</th>
+            <td mat-cell *matCellDef="let solicitacao">
+                {{ solicitacao.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataSolicitacao">
+            <th mat-header-cell *matHeaderCellDef>Data</th>
+            <td mat-cell *matCellDef="let solicitacao">
+                {{ solicitacao.dataSolicitacao | date:'dd/MM/yyyy':'UTC':'pt-BR' }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let solicitacao">
+                <span class="status-badge" [ngClass]="solicitacao.status.toLowerCase()">
+                    {{solicitacao.status}}
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let solicitacao">
+                <a mat-icon-button [routerLink]="['/solicitacoes', solicitacao.id]" matTooltip="Detalhar">
+                    <mat-icon>visibility</mat-icon>
+                </a>
+                <button mat-icon-button (click)="abrirDialogStatus(solicitacao)" matTooltip="Alterar Status">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [colSpan]="colunas.length" style="text-align: center; padding: 24px;">
+                Nenhuma solicitação encontrada.
+            </td>
+        </tr>
+    </table>
+</div>

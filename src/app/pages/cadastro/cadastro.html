@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="header">
+        <button mat-icon-button (click)="cancelar()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>Nova Solicitação</h1>
+    </div>
+    
+    <mat-card class="card">
+        <form [formGroup]="form" (ngSubmit)="salvar()">
+            <mat-form-field appearance="outline" class="campo-full">
+                <mat-label>Solicitante</mat-label>
+                <mat-select formControlName="solicitanteId">
+                    @for (solicitante of solicitantes; track solicitante.id) {
+                        <mat-option [value]="solicitante.id">
+                            {{ solicitante.nome }} - {{ solicitante.cpfCnpj }}
+                        </mat-option>
+                    }
+                </mat-select>
+                @if (form.get('solicitanteId')?.hasError('required')) {
+                    <mat-error>O solicitante é obrigatório</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="campo-full">
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="categoriaId">
+                    @for (categoria of categorias; track categoria.id) {
+                        <mat-option [value]="categoria.id">{{ categoria.nome }}</mat-option>
+                    }
+                </mat-select>
+                @if (form.get('categoriaId')?.hasError('required')) {
+                    <mat-error>A categoria é obrigatória</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="campo-full">
+                <mat-label>Valor</mat-label>
+                <span matTextPrefix>R$&nbsp;</span>
+                <input matInput mask="separator.2" thousandSeparator="." decimalMarker="," formControlName="valor" />
+                @if (form.get('valor')?.hasError('required')) {
+                    <mat-error>O valor é obrigatório</mat-error>
+                }
+                @if (form.get('valor')?.hasError('min')) {
+                    <mat-error>O valor deve ser maior que zero</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="campo-full">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput formControlName="descricao" rows="3"></textarea>
+            </mat-form-field>
+
+            <div class="acoes">
+                <button mat-stroked-button type="button" (click)="cancelar()">
+                    <mat-icon>cancel</mat-icon> Cancelar
+                </button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="salvando">
+                    <mat-icon>save</mat-icon> Salvar
+                </button>
+            </div>
+        </form>
+    </mat-card>
+</div>

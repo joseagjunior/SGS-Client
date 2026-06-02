@@ -1,0 +1,126 @@
+.container {
+    padding: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+}
+
+.carregando {
+    text-align: center;
+    padding: 48px;
+    color: #888;
+}
+
+.card { padding: 8px; }
+
+.conteudo { padding: 16px 0; }
+
+.grupo {
+    padding: 16px 0;
+
+    h3 {
+        margin: 0 0 12px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+}
+
+.linha {
+    display: flex;
+    gap: 16px;
+    padding: 6px 12px;
+
+    .label {
+        min-width: 120px;
+        font-weight: 500;
+        color: #555;
+    }
+}
+
+.status-badge {
+    margin-left: 12px;
+    margin-bottom: 10px;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.solicitado { background-color: #e3f2fd; color: #1565c0; }
+    &.liberado { background-color: #e8f5e9; color: #2e7d32; }
+    &.aprovado { background-color: #f3e5f5; color: #6a1b9a; }
+    &.rejeitado { background-color: #ffebee; color: #c62828; }
+    &.cancelado { background-color: #f5f5f5; color: #616161; }
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px 12px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 4px;
+    flex-shrink: 0px;
+
+    &.solicitado { background-color: #1565c0; }
+    &.liberado { background-color: #2e7d32; }
+    &.aprovado { background-color: #6a1b9a; }
+    &.rejeitado { background-color: #c62828; }
+    &.cancelado { background-color: #616161; }
+}
+
+.timeline-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.timeline-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+
+    .de { color: #888; }
+    .seta { font-size: 16px; color: #888; }
+    .criado { color: #555; font-style: italic; }
+
+    .para {
+        font-weight: 600;
+        &.solicitado { color: #1565c0; }
+        &.liberado { color: #2e7d32; }
+        &.aprovado { color: #6a1b9a; }
+        &.rejeitado { color: #c62828; }
+        &.cancelado { color: #616161; }
+    }
+}
+
+.timeline-data {
+    font-size: 12px;
+    color: #888;
+}

@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="header">
+    <button mat-icon-button (click)="voltar()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>Detalhes da Solicitação</h1>
+    </div>
+
+    @if (carregando) {
+        <div class="carregando">Carregando...</div>
+    }
+
+    @if (!carregando && solicitacao) {
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-title>Solicitação #{{ solicitacao.id }}</mat-card-title>
+                <span class="status-badge" [ngClass]="solicitacao.status!.toLowerCase()">
+                    {{ solicitacao.status }}
+                </span>
+            </mat-card-header>
+
+            <mat-divider></mat-divider>
+
+            <mat-card-content class="conteudo">
+                <div class="grupo">
+                    <h3>Solicitante</h3>
+                    <div class="linha">
+                        <span class="label">Nome</span>
+                        <span>{{ solicitacao.solicitante?.nome }}</span>
+                    </div>
+                    <div class="linha">
+                        <span class="label">CPF/CNPJ</span>
+                        <span>{{ solicitacao.solicitante?.cpfCnpj }}</span>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <div class="grupo">
+                    <h3>Solicitação</h3>
+                    <div class="linha">
+                        <span class="label">Categoria</span>
+                        <span>{{ solicitacao.categoria?.nome }}</span>
+                    </div>
+                    <div class="linha">
+                        <span class="label">Valor</span>
+                        <span>{{ solicitacao.valor | currency:'BRL' }}</span>
+                    </div>
+                    <div class="linha">
+                        <span class="label">Data</span>
+                        <span>{{ solicitacao.dataSolicitacao | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                    @if (solicitacao.descricao) {
+                        <div class="linha">
+                            <span class="label">Descrição</span>
+                            <span>{{ solicitacao.descricao }}</span>
+                        </div>
+                    }
+                </div>
+            </mat-card-content>
+
+            <mat-divider></mat-divider>
+
+            <div class="grupo">
+                <h3>Histórico</h3>
+                <div class="timeline">
+                    @for (registro of historico; track registro.id) {
+                        <div class="timeline-item">
+                            <div class="timeline-dot" [ngClass]="registro.statusNovo.toLocaleLowerCase()"></div>
+                            <div class="timeline-conteudo">
+                                <span class="timeline-status">
+                                    @if (registro.statusAnterior) {
+                                        <span class="de">{{ registro.statusAnterior }}</span>
+                                        <mat-icon class="seta">arrow_forward</mat-icon>
+                                    } 
+                                    @else {
+                                        <span class="criado">Solicitação criada</span>
+                                    }
+                                    <span class="para" [ngClass]="registro.statusNovo.toLocaleLowerCase()">
+                                        {{ registro.statusNovo }}
+                                    </span>
+                                </span>
+                                <span class="timeline-data">
+                                    {{ registro.dataAlteracao | date:'dd/MM/yyyy HH:mm':'':'pt-BR' }}
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <mat-card-actions align="end" style="gap: 12px;">
+                <button mat-stroked-button (click)="voltar()">
+                    <mat-icon>arrow_back</mat-icon> Voltar
+                </button>
+                <button mat-raised-button color="primary" 
+                    (click)="abrirDialogStatus()" [disabled]="statusFinal()">
+                    <mat-icon>edit</mat-icon> Alterar Status
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    }
+</div>

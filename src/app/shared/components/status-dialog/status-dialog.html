@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Alterar Status</h2>
+
+<mat-dialog-content>
+    <p>Status atual: <strong>{{ data.statusAtual }}</strong></p>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Novo Status</mat-label>
+        <mat-select [(ngModel)]="novoStatus">
+            @for (status of statusList; track $index) {
+                 <mat-option [value]="status">{{ status }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="confirmar()">Confirmar</button>
+</mat-dialog-actions>
